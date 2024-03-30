@@ -1,0 +1,34 @@
+nav > a > img {
+  width: 40%;
+  max-width: 300px;
+  min-width: 90px;
+  transition: transform;
+  transition-duration: 0.4s;
+}
+nav > a > img:hover {
+  transform: scale(1.2);
+}
+nav > #navBar {
+  display: none;
+  transition: display;
+}
+input[type="button"] {
+  cursor: pointer;
+  transition: transform;
+  transition-duration: 0.4s;
+}
+input[type="button"]:hover {
+  transform: scale(1.2);
+}
+ul > li {
+  transition: transform;
+  transition-duration: 0.4s;
+}
+@media screen and (min-width: 1024px) {
+  nav > #iconMenu {
+    display: none;
+  }
+  nav > #navBar {
+    display: flex;
+  }
+}
