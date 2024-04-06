@@ -9,39 +9,50 @@
     <button id="btn">SEND DATA</button>
     <button id="receiveDATA">receive DATA</button>
     <script>
-      let data = [
-        { nom: "khalid", prenom: "mrzg", age: 24 },
-        { nom: "sidqui", prenom: "ziko", age: 22 },
-      ];
+      let data = {
+        data: [
+          { nom: "test", prenom: "mrzg", age: 0 },
+          { nom: "sidqui", prenom: "ziko", age: 22 },
+        ],
+      };
       let dataJSON = JSON.stringify(data);
+      console.log(dataJSON);
       document.getElementById("btn").addEventListener("click", function () {
-        let request = new XMLHttpRequest();
-        request.open("POST", "https://getpantry.cloud/apiv1/pantry/48db89c1-ef9c-4410-b945-2c1a51212191/basket/khalidmarzoug", true);
-        request.setRequestHeader("Content-Type", "application/json");
-        request.onreadystatechange = function () {
-          if (this.readyState == 4 && this.status == 200) {
-            console.log("Data sent Successfully");
-          } else {
-            console.error("Failed to send Data");
+        let xhr = new XMLHttpRequest();
+        xhr.open(
+          "POST",
+          "https://getpantry.cloud/apiv1/pantry/48db89c1-ef9c-4410-b945-2c1a51212191/basket/khalidmarzoug",
+          true
+        );
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+          if (this.readyState == 4) {
+            if (this.status >= 200 && this.status < 300) {
+              console.log("Data sent Successfully");
+            } else {
+              console.error("Failed to send Data", this.status);
+            }
           }
         };
-        request.send(dataJSON);
+        xhr.send(dataJSON);
       });
       document.getElementById("receiveDATA").addEventListener("click", () => {
-        let request = new XMLHttpRequest();
-        request.open(
+        let xhr = new XMLHttpRequest();
+        xhr.open(
           "GET",
           "https://getpantry.cloud/apiv1/pantry/48db89c1-ef9c-4410-b945-2c1a51212191/basket/khalidmarzoug",
           true
         );
-        request.onreadystatechange = function () {
-          if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
-          } else {
-            console.error("Failed to receive Data");
+        xhr.onreadystatechange = function () {
+          if (this.readyState == 4) {
+            if (this.status >= 200 && this.status < 300) {
+              console.log(this.responseText);
+            } else {
+              console.error("Failed to receive Data", this.status);
+            }
           }
         };
-        request.send();
+        xhr.send();
       });
     </script>
   </body>
