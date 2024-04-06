@@ -9,7 +9,7 @@ nav > a > img:hover {
   transform: scale(1.2);
 }
 nav > #navBar {
-  display: none;
+  width: 200px;
   transition: display;
 }
 input[type="button"] {
@@ -24,11 +24,15 @@ ul > li {
   transition: transform;
   transition-duration: 0.4s;
 }
+
 @media screen and (min-width: 1024px) {
   nav > #iconMenu {
     display: none;
   }
   nav > #navBar {
     display: flex;
+    width: 50%;
+    justify-content: center;
+    align-items: center;
   }
 }

@@ -554,12 +554,12 @@ video {
   --tw-contain-style:  ;
 }
 
-.absolute {
-  position: absolute;
+.fixed {
+  position: fixed;
 }
 
-.left-\[0px\] {
-  left: 0px;
+.right-\[0px\] {
+  right: 0px;
 }
 
 .top-\[49px\] {
@@ -578,10 +578,6 @@ video {
   height: 100vh;
 }
 
-.w-full {
-  width: 100%;
-}
-
 .transform {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
@@ -592,6 +588,10 @@ video {
 
 .flex-col {
   flex-direction: column;
+}
+
+.items-start {
+  align-items: flex-start;
 }
 
 .items-center {
@@ -626,6 +626,10 @@ video {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.bg-\[url\(\.\/Media\/BackGrounds\/pexels-rostislav-uzunov-5011647\.jpg\)\] {
+  background-image: url(./Media/BackGrounds/pexels-rostislav-uzunov-5011647.jpg);
 }
 
 .bg-\[url\(\.\/Media\/BackGrounds\/BgBody\.jpg\)\] {
@@ -681,10 +685,6 @@ video {
 @media (min-width: 1024px) {
   .lg\:static {
     position: static;
-  }
-
-  .lg\:top-0 {
-    top: 0px;
   }
 
   .lg\:w-auto {

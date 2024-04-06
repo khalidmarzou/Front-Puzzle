@@ -54,4 +54,8 @@ Array.from(ul.children).forEach((li, index) => {
 // display navBar att width over than 1024px :
 window.addEventListener("resize", () => {
   window.innerWidth > 1024 ? (navBar.style.display = "flex") : null;
+  window.innerWidth < 1024
+    ? (navBar.style.display = "none") &&
+      iconMenu.children[0].classList.replace("fa-xmark", "fa-bars")
+    : null;
 });
