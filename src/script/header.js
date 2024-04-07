@@ -59,3 +59,53 @@ window.addEventListener("resize", () => {
       iconMenu.children[0].classList.replace("fa-xmark", "fa-bars")
     : null;
 });
+document.addEventListener("DOMContentLoaded", () => {
+  window.innerWidth > 1024 ? (navBar.style.display = "flex") : null;
+  window.innerWidth < 1024
+    ? (navBar.style.display = "none") &&
+      iconMenu.children[0].classList.replace("fa-xmark", "fa-bars")
+    : null;
+});
+
+// Register :
+const formContainer = getID("formContainer");
+function closeRegisterForm() {
+  formContainer.style.display = "none";
+}
+const registerBtn = getID("register");
+registerBtn.addEventListener("click", (event) => {
+  formContainer.style.display = "flex";
+});
+// Validation Register :
+const registerForm = document.forms[0];
+const inputsRegister = Array.from(registerForm.getElementsByTagName("input"));
+const patternRegister = [
+  /[a-z]+\s[a-z]+/i,
+  /\w{3,}@[a-z]{2,}\.\w{2,12}/i,
+  /.{6,}/,
+];
+const errorRegister = [
+  "Enter Your Full Name 'don't forget space'",
+  "Enter Your Email 'user@example.expl'",
+  "At Least 6 Characters",
+  "repeat your Password",
+];
+function validationRegisterForm() {
+  let validation = true;
+  for (let i = 0; i < inputsRegister.length - 1; i++) {
+    if (patternRegister[i].test(inputsRegister[i].value)) {
+      inputsRegister[i].style.borderColor = "green";
+    } else {
+      inputsRegister[i].style.borderColor = "red";
+      inputsRegister[i].nextElementSibling.textContent = errorRegister[i];
+    }
+  }
+}
+
+// button Register :
+console.log(registerForm);
+registerForm.onsubmit = function (event) {
+  validationRegisterForm();
+  console.log("okkk");
+  return event.preventDefault();
+};

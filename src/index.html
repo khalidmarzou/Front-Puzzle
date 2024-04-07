@@ -12,11 +12,15 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <link rel="icon" href="Media/Logo/png/logo-whiteicon.png">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link rel="icon" href="Media/Logo/png/logo-whiteicon.png" />
     <title>Front Puzzle</title>
   </head>
   <body
-    class="bg-[url(./Media/BackGrounds/pexels-rostislav-uzunov-5011647.jpg)] bg-cover bg-center h-screen"
+    class="bg-[url(./Media/BackGrounds/pexels-rostislav-uzunov-5011647.jpg)] bg-cover bg-center h-screen flex flex-col gap-5"
   >
     <header class="bg-[#ffffff30] text-white">
       <nav class="flex items-center justify-between px-5 h-12">
@@ -41,9 +45,10 @@
               value="Login"
             />
             <input
+              id="register"
               type="button"
               class="bg-white text-[#CC3A62] rounded-sm px-3 py-1"
-              value="Sign-In"
+              value="Register"
             />
           </li>
         </ul>
@@ -53,9 +58,127 @@
         ></a>
       </nav>
     </header>
-    <main>
-      <article></article>
-    </main>
-    <script src="script.js"></script>
+    <!--I remove hidden from here-->
+    <div
+      class="bg-[#00000090] fixed w-full h-full justify-center items-center" 
+      id="formContainer"
+    >
+      <div
+        class="flex h-[90%] w-auto rounded-md flex-col justify-center bg-white px-6 py-0 lg:px-8 relative"
+      >
+        <div class="flex justify-end absolute top-5 right-9 cursor-pointer">
+          <i
+            class="bi bi-x-lg text-xl text-[#CC3A62] hover:text-gray-900"
+            tabindex="-1"
+            onclick="closeRegisterForm()"
+          ></i>
+        </div>
+        <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+          <img
+            class="mx-auto h-11 w-auto"
+            src="Media/tools/124_750x750_Front_Color-NA-removebg-preview.png"
+            alt="Your Company"
+          />
+          <h2
+            class="mt-5 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900"
+          >
+            Create Your Acount in 1 min
+          </h2>
+        </div>
+
+        <div class="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
+          <form class="space-y-3" action="#" method="">
+            <div>
+              <label
+                for="fullName"
+                class="block text-sm font-medium leading-6 text-gray-900"
+                >Full Name</label
+              >
+              <div class="mt-0">
+                <input
+                  id="fullName"
+                  name="fullName"
+                  type="text"
+                  required
+                  placeholder="First-Name Second-Name"
+                  class="block w-full rounded-sm border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+              <div class="h-[12px] text-[red] text-sm"></div>
+            </div>
+            <div>
+              <label
+                for="email"
+                class="block text-sm font-medium leading-6 text-gray-900"
+                >Email address</label
+              >
+              <div class="mt-0">
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="example@example.example"
+                  required
+                  class="block w-full rounded-sm border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+              <div class="h-[12px] text-[red] text-sm"></div>
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between">
+                <label
+                  for="password"
+                  class="block text-sm font-medium leading-6 text-gray-900"
+                  >Password</label
+                >
+              </div>
+              <div class="mt-0">
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  required
+                  placeholder="At Least 6 characters"
+                  class="block w-full rounded-sm border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+              <div class="h-[12px] text-[red] text-sm"></div>
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between">
+                <label
+                  for="confirmPassword"
+                  class="block text-sm font-medium leading-6 text-gray-900"
+                  >Confirm Password</label
+                >
+              </div>
+              <div class="mt-0">
+                <input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type="password"
+                  required
+                  placeholder="Confirm Your Password"
+                  class="block w-full rounded-sm border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+              <div class="h-[12px] text-[red] text-sm"></div>
+            </div>
+
+            <div>
+              <button
+                type="submit"
+                class="mt-6 flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                Register
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="script/header.js"></script>
   </body>
 </html>

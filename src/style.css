@@ -24,7 +24,9 @@ ul > li {
   transition: transform;
   transition-duration: 0.4s;
 }
-
+main {
+  height: 90vh;
+}
 @media screen and (min-width: 1024px) {
   nav > #iconMenu {
     display: none;
@@ -35,4 +37,11 @@ ul > li {
     justify-content: center;
     align-items: center;
   }
+}
+
+form input {
+  padding-left: 10px;
+}
+form input:focus {
+  outline: none;
 }
