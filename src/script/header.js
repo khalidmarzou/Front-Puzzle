@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
     : null;
 });
 
-// Register :
+// Register Btn to display form Register:
 const formContainer = getID("formContainer");
 function closeRegisterForm() {
   formContainer.style.display = "none";
@@ -76,6 +76,7 @@ const registerBtn = getID("register");
 registerBtn.addEventListener("click", (event) => {
   formContainer.style.display = "flex";
 });
+
 // Validation Register :
 const registerForm = document.forms[0];
 const inputsRegister = Array.from(registerForm.getElementsByTagName("input"));
@@ -95,17 +96,92 @@ function validationRegisterForm() {
   for (let i = 0; i < inputsRegister.length - 1; i++) {
     if (patternRegister[i].test(inputsRegister[i].value)) {
       inputsRegister[i].style.borderColor = "green";
+      inputsRegister[i].parentElement.nextElementSibling.textContent = "";
+      validation = validation && true;
     } else {
       inputsRegister[i].style.borderColor = "red";
-      inputsRegister[i].nextElementSibling.textContent = errorRegister[i];
+      inputsRegister[i].parentElement.nextElementSibling.textContent =
+        errorRegister[i];
+      validation = validation && false;
     }
+  }
+  if (inputsRegister[2].value === inputsRegister[3].value) {
+    inputsRegister[3].style.borderColor = "green";
+    inputsRegister[3].parentElement.nextElementSibling.textContent = "";
+    validation = validation && true;
+  } else {
+    inputsRegister[3].style.borderColor = "red";
+    inputsRegister[3].parentElement.nextElementSibling.textContent =
+      errorRegister[3];
+    validation = validation && false;
+  }
+  return validation;
+}
+
+// submit Register Register Form :
+class User {
+  constructor(name, email, password) {
+    this.name = name;
+    this.email = email;
+    this.password = password;
   }
 }
 
-// button Register :
-console.log(registerForm);
+let usersInfo;
+
+// Laod data Users :
+document.addEventListener("DOMContentLoaded", laodDataFromServer);
+function laodDataFromServer() {
+  const xhr = new XMLHttpRequest();
+  xhr.open(
+    "GET",
+    "https://getpantry.cloud/apiv1/pantry/48db89c1-ef9c-4410-b945-2c1a51212191/basket/front_puzzle",
+    true
+  );
+  xhr.onload = function () {
+    if (this.readyState === 4) {
+      if (this.status >= 200 && this.status < 300) {
+        usersInfo = JSON.parse(this.responseText).usersInfo;
+        console.log(usersInfo);
+      }
+    }
+  };
+  xhr.onerror = function () {
+    alert("error in laod data users from server");
+  };
+  xhr.send();
+}
+let dataJSON;
 registerForm.onsubmit = function (event) {
-  validationRegisterForm();
-  console.log("okkk");
-  return event.preventDefault();
+  event.preventDefault();
+  const formValid = validationRegisterForm();
+  if (formValid) {
+    const user = new User(
+      inputsRegister[0].value,
+      inputsRegister[1].value,
+      inputsRegister[2].value
+    );
+    usersInfo.push(user);
+    dataJSON = JSON.stringify({
+      usersInfo: usersInfo,
+    });
+    const xhr = new XMLHttpRequest();
+    xhr.open(
+      "POST",
+      "https://getpantry.cloud/apiv1/pantry/48db89c1-ef9c-4410-b945-2c1a51212191/basket/front_puzzle",
+      true
+    );
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onload = function () {
+      if (this.readyState === 4) {
+        if (this.status >= 200 && this.status < 300) {
+          console.log("data send with success : ", this.status);
+        }
+      }
+    };
+    xhr.onerror = function () {
+      alert("error in send data users to the server");
+    };
+    xhr.send(dataJSON);
+  }
 };
