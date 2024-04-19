@@ -115,6 +115,14 @@ function validationRegisterForm() {
       errorRegister[3];
     validation = validation && false;
   }
+  if (checkUserExist(inputsRegister[1].value)) {
+    validation = validation && true;
+  } else {
+    inputsRegister[1].style.borderColor = "red";
+    inputsRegister[1].parentElement.nextElementSibling.textContent =
+      "email already exist please login";
+    validation = validation && false;
+  }
   return validation;
 }
 
@@ -161,6 +169,7 @@ registerForm.onsubmit = function (event) {
       inputsRegister[1].value,
       inputsRegister[2].value
     );
+
     usersInfo.push(user);
     dataJSON = JSON.stringify({
       usersInfo: usersInfo,
@@ -185,3 +194,13 @@ registerForm.onsubmit = function (event) {
     xhr.send(dataJSON);
   }
 };
+
+// check if user already registered :
+function checkUserExist(mail) {
+  const indexMail = usersInfo.findIndex((user) => user.email === mail);
+  if (indexMail != -1) {
+    return false;
+  } else {
+    return true;
+  }
+}
