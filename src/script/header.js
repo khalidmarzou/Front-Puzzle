@@ -150,7 +150,6 @@ function laodDataFromServer() {
     if (this.readyState === 4) {
       if (this.status >= 200 && this.status < 300) {
         usersInfo = JSON.parse(this.responseText).usersInfo;
-        console.log(usersInfo);
       }
     }
   };
@@ -167,7 +166,7 @@ registerForm.onsubmit = function (event) {
     const user = new User(
       inputsRegister[0].value,
       inputsRegister[1].value,
-      inputsRegister[2].value
+      cryptage(inputsRegister[2].value, true)
     );
 
     usersInfo.push(user);
@@ -204,3 +203,83 @@ function checkUserExist(mail) {
     return true;
   }
 }
+
+// Crypt and Decrypt password :
+function cryptage(password, a) {
+  var crypt = {
+    secret: "THESECRET",
+    encrypt: function (clear) {
+      var cipher = CryptoJS.AES.encrypt(clear, crypt.secret);
+      cipher = cipher.toString();
+      return cipher;
+    },
+    decrypt: function (cipher) {
+      var decipher = CryptoJS.AES.decrypt(cipher, crypt.secret);
+      decipher = decipher.toString(CryptoJS.enc.Utf8);
+      return decipher;
+    },
+  };
+
+  if (a) {
+    let cipher = crypt.encrypt(password);
+    return cipher;
+  } else {
+    let decipher = crypt.decrypt(password);
+    return decipher;
+  }
+}
+
+// Btn LOgin to display Login Form :
+const formContainerLogin = getID("formContainerLogin");
+function closeLoginForm() {
+  formContainerLogin.style.display = "none";
+}
+const loginBtn = getID("login");
+loginBtn.addEventListener("click", (event) => {
+  formContainerLogin.style.display = "flex";
+});
+
+// Login to the account :
+const loginForm = document.forms[1];
+const emailLogin = document.getElementById("emailLogin");
+const passwordLogin = document.getElementById("passwordLogin");
+const loginRegisterBtns = getID("loginRegisterBtns");
+
+function verifierEmailPassword() {
+  const user = usersInfo.find((us) => us.email === emailLogin.value);
+  if (user !== undefined) {
+    if (cryptage(user.password, false) === passwordLogin.value) {
+      emailLogin.style.borderColor = "green";
+      emailLogin.parentElement.nextElementSibling.textContent = "";
+      passwordLogin.style.borderColor = "green";
+      passwordLogin.parentElement.nextElementSibling.textContent = "";
+      console.log("login success");
+      closeLoginForm();
+      loginRegisterBtns.innerHTML = `Welcome ${user.name}
+                                      <a class="cursor-pointer text-red-300 hover:text-red-900" onclick="logout()"><i class="bi bi-box-arrow-right"></i></a>`;
+      loginRegisterBtns.style.color = "orange";
+    } else {
+      emailLogin.style.borderColor = "green";
+      emailLogin.parentElement.nextElementSibling.textContent = "";
+      passwordLogin.style.borderColor = "red";
+      passwordLogin.parentElement.nextElementSibling.textContent =
+        "Wrong Password";
+    }
+  } else {
+    emailLogin.style.borderColor = "red";
+    emailLogin.parentElement.nextElementSibling.textContent =
+      "email not founded";
+  }
+}
+
+// action :
+loginForm.onsubmit = function (event) {
+  event.preventDefault();
+  verifierEmailPassword();
+};
+
+// Log Out from Your Account :
+getID("test").onclick = function () {
+  console.log("OKKKK");
+  console.log(localStorage.getItem());
+};
