@@ -278,8 +278,47 @@ loginForm.onsubmit = function (event) {
   verifierEmailPassword();
 };
 
+/*
 // Log Out from Your Account :
 getID("test").onclick = function () {
   console.log("OKKKK");
   console.log(localStorage.getItem());
 };
+*/
+
+// Slides :
+let currentSlide = 1;
+const totalSlides = 3;
+
+function showSlide(slideIndex) {
+  const slides = document.querySelectorAll('.slide');
+  
+  slides.forEach((slide, index) => {
+    if (index + 1 === slideIndex) {
+      slide.classList.add('active');
+      slide.classList.remove('previous', 'next');
+    } else if (index + 1 === currentSlide) {
+      slide.classList.remove('active', 'next');
+      slide.classList.add('previous');
+    } else {
+      slide.classList.remove('active', 'previous');
+      slide.classList.add('next');
+    }
+  });
+  
+  currentSlide = slideIndex;
+}
+
+function nextSlide() {
+  currentSlide = (currentSlide % totalSlides) + 1;
+  showSlide(currentSlide);
+}
+
+function previousSlide() {
+  currentSlide = (currentSlide - 2 + totalSlides) % totalSlides + 1;
+  showSlide(currentSlide);
+}
+
+// Show the initial slide
+showSlide(currentSlide);
+
