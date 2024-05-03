@@ -257,7 +257,9 @@
         </div>
       </div>
     </div>
-    <main class="w-[100%] flex justify-center items-center fixed bottom-5">
+    <main
+      class="w-[100%] flex justify-center items-center fixed bottom-5 hidden"
+    >
       <div
         class="fixed right-3 h-16 w-16 text-7xl cursor-pointer hover:text-gray-600 z-40 text-white"
         onclick="nextSlide()"
@@ -282,11 +284,37 @@
       ></div>
       <div
         id="slide3"
+        leading
         class="slide border"
         style="background-color: #1b618450"
       ></div>
     </main>
-
-    <script src="script/header.js"></script>
+    <aside
+      class="text-3xl w-[30%] fixed top-[50%] translate-y-[-50%] left-16 text-center font-mono text-white leading-10"
+    >
+      Welcome to <span class="text-red-800 bg-green-100 py-1">Front</span
+      ><span class="text-green-800 bg-red-100 py-2">Puzzle</span>, your go-to
+      spot for front-end fun. Dive into quizzes and courses on<span
+        class="text-green-400"
+      >
+        HTML</span
+      >,<span class="text-orange-400"> CSS</span>, and
+      <span class="text-red-400">JavaScript</span>. Let's learn together!
+    </aside>
+    
+    <footer
+      class="w-auto fixed bottom-0 right-[50%] translate-x-[50%] p-5 text-xl"
+    >
+      © 2024 : MARZOUG-KHALID |
+      <i
+        class="fa-brands fa-github text-2xl hover:text-gray-700 cursor-pointer"
+        onclick="github()"
+      ></i>
+      <i
+        class="fa-brands fa-linkedin text-2xl hover:text-gray-700 cursor-pointer"
+        onclick="linkdin()"
+      ></i>
+    </footer>
+    <script src="script.js"></script>
   </body>
 </html>

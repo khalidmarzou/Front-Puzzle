@@ -136,7 +136,7 @@ class User {
 }
 
 let usersInfo;
-
+let login;
 // Laod data Users :
 document.addEventListener("DOMContentLoaded", laodDataFromServer);
 function laodDataFromServer() {
@@ -150,14 +150,24 @@ function laodDataFromServer() {
     if (this.readyState === 4) {
       if (this.status >= 200 && this.status < 300) {
         usersInfo = JSON.parse(this.responseText).usersInfo;
+        // import data from local Storage :
+        const findUser = usersInfo.find(
+          (user) => user.email === localStorage.getItem("user")
+        );
+        if (findUser !== undefined) {
+          login = "YES";
+          alreadyLogin();
+        }
       }
     }
   };
   xhr.onerror = function () {
-    alert("error in laod data users from server");
+    console.error("error in laod data users from server");
   };
   xhr.send();
 }
+
+// send data in register :
 let dataJSON;
 registerForm.onsubmit = function (event) {
   event.preventDefault();
@@ -184,11 +194,13 @@ registerForm.onsubmit = function (event) {
       if (this.readyState === 4) {
         if (this.status >= 200 && this.status < 300) {
           console.log("data send with success : ", this.status);
+          login = "YES";
+          alreadyLogin();
         }
       }
     };
     xhr.onerror = function () {
-      alert("error in send data users to the server");
+      console.error("error in send data users to the server");
     };
     xhr.send(dataJSON);
   }
@@ -255,9 +267,9 @@ function verifierEmailPassword() {
       passwordLogin.parentElement.nextElementSibling.textContent = "";
       console.log("login success");
       closeLoginForm();
-      loginRegisterBtns.innerHTML = `Welcome ${user.name}
-                                      <a class="cursor-pointer text-red-300 hover:text-red-900" onclick="logout()"><i class="bi bi-box-arrow-right"></i></a>`;
-      loginRegisterBtns.style.color = "orange";
+      localStorage.setItem("user", user.email);
+      login = "YES";
+      alreadyLogin();
     } else {
       emailLogin.style.borderColor = "green";
       emailLogin.parentElement.nextElementSibling.textContent = "";
@@ -271,41 +283,43 @@ function verifierEmailPassword() {
       "email not founded";
   }
 }
-
+function alreadyLogin() {
+  const user = usersInfo.find(
+    (user) => user.email === localStorage.getItem("user")
+  );
+  if (login === "YES") {
+    loginRegisterBtns.innerHTML = `Welcome ${user.name}
+                                      <a class="cursor-pointer text-red-300 hover:text-red-900" onclick="logout()"><i class="bi bi-box-arrow-right"></i></a>`;
+    loginRegisterBtns.style.color = "orange";
+    document.getElementsByTagName("main")[0].classList.remove("hidden");
+  }
+}
 // action :
 loginForm.onsubmit = function (event) {
   event.preventDefault();
   verifierEmailPassword();
 };
 
-/*
-// Log Out from Your Account :
-getID("test").onclick = function () {
-  console.log("OKKKK");
-  console.log(localStorage.getItem());
-};
-*/
-
 // Slides :
 let currentSlide = 1;
 const totalSlides = 3;
 
 function showSlide(slideIndex) {
-  const slides = document.querySelectorAll('.slide');
-  
+  const slides = document.querySelectorAll(".slide");
+
   slides.forEach((slide, index) => {
     if (index + 1 === slideIndex) {
-      slide.classList.add('active');
-      slide.classList.remove('previous', 'next');
+      slide.classList.add("active");
+      slide.classList.remove("previous", "next");
     } else if (index + 1 === currentSlide) {
-      slide.classList.remove('active', 'next');
-      slide.classList.add('previous');
+      slide.classList.remove("active", "next");
+      slide.classList.add("previous");
     } else {
-      slide.classList.remove('active', 'previous');
-      slide.classList.add('next');
+      slide.classList.remove("active", "previous");
+      slide.classList.add("next");
     }
   });
-  
+
   currentSlide = slideIndex;
 }
 
@@ -315,10 +329,47 @@ function nextSlide() {
 }
 
 function previousSlide() {
-  currentSlide = (currentSlide - 2 + totalSlides) % totalSlides + 1;
+  currentSlide = ((currentSlide - 2 + totalSlides) % totalSlides) + 1;
   showSlide(currentSlide);
 }
 
 // Show the initial slide
 showSlide(currentSlide);
 
+// linkdin and github links :
+function linkdin() {
+  window.open("https://www.linkedin.com/in/khalid-marzoug/");
+}
+
+function github() {
+  window.open("https://github.com/khalidmarzou");
+}
+
+// Fill Questions from json File :
+
+let difficultQs = [];
+let easyQs = [];
+
+document.addEventListener("DOMContentLoaded", function () {
+  const xhr = new XMLHttpRequest();
+  xhr.open(
+    "GET",
+    "https://getpantry.cloud/apiv1/pantry/48db89c1-ef9c-4410-b945-2c1a51212191/basket/questions",
+    true
+  );
+  xhr.onload = function () {
+    if (this.readyState == 4) {
+      if (this.status >= 200 && this.status < 300) {
+        difficultQs = JSON.parse(this.responseText).difficultQuestions;
+        easyQs = JSON.parse(this.responseText).easyQuestions;
+        console.log(difficultQs);
+      } else {
+        console.error("Failed to get data questions. Status:", this.status);
+      }
+    }
+  };
+  xhr.onerror = function (error) {
+    console.error("Failed to send request", error);
+  };
+  xhr.send();
+});
