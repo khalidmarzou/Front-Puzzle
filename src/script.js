@@ -195,7 +195,9 @@ registerForm.onsubmit = function (event) {
         if (this.status >= 200 && this.status < 300) {
           console.log("data send with success : ", this.status);
           login = "YES";
+          localStorage.setItem("user", user.email);
           alreadyLogin();
+          closeRegisterForm();
         }
       }
     };
@@ -292,8 +294,17 @@ function alreadyLogin() {
                                       <a class="cursor-pointer text-red-300 hover:text-red-900" onclick="logout()"><i class="bi bi-box-arrow-right"></i></a>`;
     loginRegisterBtns.style.color = "orange";
     document.getElementsByTagName("main")[0].classList.remove("hidden");
+    document.getElementsByTagName("aside")[0].classList.add("hidden");
+    getID("indexPic").style.display = "none";
   }
 }
+
+// Logout function :
+function logout() {
+  localStorage.clear();
+  location.reload();
+}
+
 // action :
 loginForm.onsubmit = function (event) {
   event.preventDefault();
@@ -344,32 +355,3 @@ function linkdin() {
 function github() {
   window.open("https://github.com/khalidmarzou");
 }
-
-// Fill Questions from json File :
-
-let difficultQs = [];
-let easyQs = [];
-
-document.addEventListener("DOMContentLoaded", function () {
-  const xhr = new XMLHttpRequest();
-  xhr.open(
-    "GET",
-    "https://getpantry.cloud/apiv1/pantry/48db89c1-ef9c-4410-b945-2c1a51212191/basket/questions",
-    true
-  );
-  xhr.onload = function () {
-    if (this.readyState == 4) {
-      if (this.status >= 200 && this.status < 300) {
-        difficultQs = JSON.parse(this.responseText).difficultQuestions;
-        easyQs = JSON.parse(this.responseText).easyQuestions;
-        console.log(difficultQs);
-      } else {
-        console.error("Failed to get data questions. Status:", this.status);
-      }
-    }
-  };
-  xhr.onerror = function (error) {
-    console.error("Failed to send request", error);
-  };
-  xhr.send();
-});
