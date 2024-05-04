@@ -4,7 +4,7 @@ const containerCheck = document.createElement("div");
 
 containerCheck.innerHTML = `
                             <div class="flex flex-col justify-center items-center gap-5">
-                                <h1 class="text-2xl font-bold text-purple-950">Check your level and let's get started.</h1>
+                                <h1 class="text-4xl font-bold text-purple-950">Check your level and let's get started.</h1>
                                 <div class="flex gap-10">
                                 <div class="inline-flex items-center">
                                 <label class="relative flex items-center p-3 rounded-full cursor-pointer" for="dificult">
@@ -127,7 +127,17 @@ function startQuiz(e) {
       const currentQs = getQuestions(difficultQs.concat(easyQs), Qsnumber);
     }
   } else {
-    getID("numberQs").classList.add("border", "border-red-700");
+    getID("numberQs").classList.add(
+      "border",
+      "border-red-700",
+      "scale-150",
+      "transition",
+      "delay-150"
+    );
+    setTimeout(function () {
+      getID("numberQs").classList.remove("scale-150");
+      getID("numberQs").classList.add("scale-0");
+    }, 100);
   }
 }
 
